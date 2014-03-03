@@ -49,16 +49,20 @@ Timer missedFirstBeaconTimer(1000);
 NewPing sonar(5, 6, 100);
 
 Drive drive(210, 13, 12, 11, 3);
+Actuator miner(9);
 
-Servo miner;
+//Servo miner;
 
 int state = SCANNING_FIRST_BEACON;
 int fieldSide = -1;
 int fieldSideCounter = 0;
 int approxVinyl = -1;
 
+int hitCounter = 0;
+
 void setup() {
-	miner.attach(9);
+	//miner.attach(9);
+	miner.init(80, 10);
 	drive.init(LOW, HIGH);
 	scanTimer.start();
 	pinMode(A0, INPUT);
@@ -253,6 +257,10 @@ void loop() {
 		case MINING:
 			drive.stop();
 			mineCoin();
+			extendTimer.start();
+			if (hitCounter == 7){
+				state = DEAD;
+			}
 
 		break;
 
@@ -264,10 +272,11 @@ void loop() {
 }
 
 void mineCoin(){
-	miner.write(10);
+	miner.extend();
 	delay(500);
-	miner.write(80);
+	miner.retract();
 	delay(500);
+	hitCounter++;
 }
 
 void stopAndReverse(int time) {
