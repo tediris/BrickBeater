@@ -7,6 +7,7 @@ class Drive{
 public:
 	Drive(int basespeed, int dir1, int e1, int dir2, int e2);
 	void init(int motor1Forward, int motor2Forward);
+	void offset(int motorOffset);
 	void drive(int leftSpeed, int rightSpeed);
 	void driveForward(int speed);
 	void driveBackward(int speed);
@@ -25,6 +26,7 @@ private:
 	int _e2;
 	int _motor1Forward;
 	int _motor2Forward;
+	int _motorOffset;
 };
 
 

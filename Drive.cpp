@@ -11,6 +11,8 @@ Drive::Drive(int basespeed, int dir1, int e1, int dir2, int e2){
 	_e1 = e1;
 	_dir2 = dir2;
 	_e2 = e2;
+
+	_motorOffset = 0;
 }
 
 void Drive::init(int motor1Forward, int motor2Forward){
@@ -19,7 +21,22 @@ void Drive::init(int motor1Forward, int motor2Forward){
 	this->stop();
 }
 
+
+/* Function: offset(int motorOffset)
+ * ---------------------------------
+ * adds an offset to motor drive functions to account for
+ * motors spinning at different speed/tolerances
+ */
+
+void Drive::offset(int motorOffset) {
+	_motorOffset = motorOffset;
+}
+
 void Drive::drive(int leftSpeed, int rightSpeed){
+	
+	//leftSpeed += _motorOffset;
+	//rightSpeed -= _motorOffset;
+
 	int leftRate = (double)leftSpeed/10 * _basespeed;
 	int rightRate = (double)rightSpeed/10 * _basespeed;
 
