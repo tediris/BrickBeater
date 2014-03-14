@@ -28,7 +28,7 @@
 #define MIDDLE A6
 #define RIGHT A7
 
-#define MIDDLE_BACK A10
+#define MIDDLE_BACK A3
 
 //BEACON READ VALUES
 #define BEACON_CENTER 0
@@ -56,6 +56,7 @@ Timer longScanTimer(800);
 Timer foundServerTimer(5000);
 
 NewPing sonar(5, 6, 100);
+//NewPing backSonar(8, 10, 100);
 
 Drive drive(210, 13, 12, 11, 3);
 
@@ -63,11 +64,14 @@ Servo miner;
 Servo rightMiner;
 Servo dumper;
 
+
 int state = SCANNING_FIRST_BEACON;
 int fieldSide = -1;
 int fieldSideCounter = 0;
 int approxVinyl = -1;
 int buttonPushedCount = 0;
+
+int hitCounter = 0;
 
 void setup() {
 	Serial.begin(9600);
@@ -374,6 +378,7 @@ void loop() {
 		break;
 	}
 }
+
 
 void pullBackMiners() {
 	miner.write(110);
